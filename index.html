@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="./style.css">
+    <title>Keímeno</title>
+
+</head>
+<body>
+    <h1 style="font-weight: bolder;">Keímeno</h1>
+    <p id="desc">Just Text. Just Notes. Save.</p>
+    <p id="version">v0.1 Early Alpha</p>
+
+    <div id="editableArea" contenteditable="true" placeholder="Click and type your text here"></div>
+
+    <div class="under-construction"></div>
+    <p id="owner">Made with ❤️ by <span>Gabs</span></p>
+
+    <script>
+        // JavaScript code to enable the input field to display entered text
+  var editableArea = document.getElementById("editableArea");
+
+// Load the saved text from local storage on page load
+window.addEventListener("load", function () {
+    var savedText = localStorage.getItem("savedText");
+    if (savedText) {
+        editableArea.innerHTML = savedText;
+    }
+});
+
+// Save the text to local storage when the user types or makes changes
+editableArea.addEventListener("input", function () {
+    var text = editableArea.innerHTML;
+    localStorage.setItem("savedText", text);
+});
+    </script>
+</body>
+</html>
