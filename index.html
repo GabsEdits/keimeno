@@ -1,23 +1,30 @@
+<!-- 
+Early Alpha - v0.1 - v0.3
+Alpha - v0.4 - v0.6
+Beta - v0.7 - v0.9
+Stable v1.0+
+-->
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="./style.css">
     <link rel="preconnect" href="https://rsms.me/">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="./style.css">
     <title>Keímeno</title>
 
 </head>
 <body>
     <h1 style="font-weight: bolder;">Keímeno</h1>
     <p id="desc">Just Text. Just Notes. Save.</p>
-    <p id="version">v0.1 Early Alpha</p>
+    <p id="version">v0.2 Early Alpha</p>
 
     <div id="editableArea" contenteditable="true" placeholder="Click and type your text here"></div>
 
     <div class="under-construction"></div>
     <p id="owner">Made with ❤️ by <span>Gabs</span></p>
-
+    <p class="github"><a href="https://github.com/GabsEdits/keimeno" aria-label="Check out the source code"><i class="fab fa-github"></i></a></p>
     <script>
         // JavaScript code to enable the input field to display entered text
   var editableArea = document.getElementById("editableArea");
@@ -35,6 +42,40 @@ editableArea.addEventListener("input", function () {
     var text = editableArea.innerHTML;
     localStorage.setItem("savedText", text);
 });
+
+
+// Function to modify text on specific keystrokes
+editableArea.addEventListener("keydown", function (event) {
+    // Check for bold keystrokes: Ctrl + B or Command + B
+    if ((event.ctrlKey || event.metaKey) && event.key === "b") {
+        event.preventDefault(); // Prevent the default browser behavior
+        document.execCommand("bold", false, null); // Toggle bold formatting
+    }
+
+    // Check for italic keystrokes: Ctrl + I or Command + I
+    if ((event.ctrlKey || event.metaKey) && event.key === "i") {
+        event.preventDefault(); // Prevent the default browser behavior
+        document.execCommand("italic", false, null); // Toggle italic formatting
+    }
+
+    // Prevent bold formatting when pressing Enter
+    if (event.key === "Enter") {
+        event.preventDefault(); // Prevent the default browser behavior
+        insertNewLine();
+    }
+});
+
+// Function to insert a new line at the current cursor position
+function insertNewLine() {
+    var selection = window.getSelection();
+    var range = selection.getRangeAt(0);
+    var br = document.createElement("br");
+    range.insertNode(br);
+    range.collapse(false);
+    selection.removeAllRanges();
+    selection.addRange(range);
+}
+
     </script>
 </body>
 </html>
