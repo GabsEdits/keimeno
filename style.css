@@ -87,7 +87,7 @@ body {
     color: #5900ff;
 }
 
-@media screen and (min-height: 637px) and (max-height: 838px){
+@media screen and (min-height: 637px) and (max-height: 727px){
     #editableArea {
         min-height: 450px;
     }
@@ -114,4 +114,14 @@ body.amoled-mode #editableArea {
     background-color: #222222;
     color: #222222;
     font-weight: inherit;
+}
+
+@media screen and (min-height: 727px) and (max-height: 915px){
+    #editableArea {
+        min-height: 410px;
+    }
+
+    .under-construction {
+        height: 400px;
+    }
 }
