@@ -20,70 +20,76 @@ Stable v1.0+
         }
 
         @media (prefers-color-scheme: dark) {
-    :root {
-        color-scheme: dark;
-    }
+        body {
+            background-color: #1d1d1d;
+            color: #fff;
+        }
 
-    body {
-        color-scheme: light;
-        background-color: #1d1d1d;
-        color: #fff;
-    }
+        #editableArea {
+            background-color: #1d1d1d;
+        }
 
-    body h1 {
-        color: #fff;
-    }
-
-    body #editableArea {
-        color: #fff;
-        background-color: #1d1d1d;
-        font-size: 17px;
-    }
-
-    .dark-mode-toggle {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    .dark-mode-toggle label {
-        margin-right: 8px;
-        font-size: 14px;
-    }
-
-    .dark-mode-toggle i {
-        color: #000;
-    }
-
-    body .dark-mode-toggle i {
-        color: #fff;
-    }
-}
-
-
-
-        body.dark-mode {
+        h1 {
+            color: #fff;
+            body.dark-mode {
             color-scheme: dark;
-            background-color: #1d1d1d;
-            color: #fff;
+            background-color: #fff;
+            color: #000;
         }
 
-        body.dark-mode h1 {
-            color: #fff;
+        h1 {
+            color: #000;
         }
 
-        body.dark-mode #editableArea {
-            color: #fff;
-            background-color: #1d1d1d;
+        #editableArea {
+            color: #000;
+            background-color: #fff;
             font-size: 17px;
         }
+        }
+    }
+        @media (prefers-color-scheme: light) {
+            body {
+                color-scheme: light;
+                background-color: #fff;
+                color: #000;
+            }
 
-        body.dark-mode .github i{
-            color: #fff;
+            h1 {
+                color: #000;
+            }
+            
+            #editableArea {
+                background-color: #fff;
+                color: #000;
+            }
+
+            .dark-mode-toggle i {
+            color: #000;
+        }
+        }
+
+        body.amoled-mode {
+            background-color: #000;
+        }
+
+        body.amoled-mode #editableArea {
+            background-color: #000;
+        }
+
+        .spoiler {
+            background-color: #22222234;
+            padding: 1px;
+            border-radius: 5px;
+            color: #000;
+            cursor: pointer;
+            font-weight: inherit;
+        }
+
+        .spoiler.revealed {
+            background-color: #222222;
+            color: #222222;
+            font-weight: inherit;
         }
 
         .dark-mode-toggle {
@@ -105,39 +111,15 @@ Stable v1.0+
             color: #000;
         }
 
-        body.dark-mode .dark-mode-toggle i {
+        body .dark-mode-toggle i {
             color: #fff;
         }
-
-        body.amoled-mode {
-                background-color: #000;
-            }
-
-        body.amoled-mode #editableArea {
-            background-color: #000;
-        }
-
-        .spoiler {
-    background-color: #22222234;
-    padding: 1px;
-    border-radius: 5px;
-    color: #000;
-    cursor: pointer;
-    font-weight: inherit; /* Add this line to inherit the font weight */
-}
-
-.spoiler.revealed {
-    background-color: #222222;
-    color: #222222;
-    font-weight: inherit; /* Add this line to inherit the font weight */
-}
-
     </style>
 </head>
 <body>
     <h1 style="font-weight: bolder;">Keímeno</h1>
     <p id="desc">Just Text. Just Notes. Save.</p>
-    <p id="version" onclick="toggleAMOLEDMode()">v0.3 Testing Ground</p>
+    <p id="version" onclick="toggleAMOLEDMode()">v0.3.5 Testing Ground</p>
 
     <div id="editableArea" contenteditable="true" placeholder="Click and type your text here"></div>
 
@@ -168,113 +150,73 @@ Stable v1.0+
         });
 
         function toggleDarkMode() {
-    // Check if the system is in dark mode
-    const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    // Prevent switching to light mode if the system is in dark mode
-    if (prefersDarkMode && !document.body.classList.contains('dark-mode')) {
-        return;
-    }
-    
-    document.body.classList.toggle('dark-mode');
-}
-
-
-        // Function to modify text on specific keystrokes
-        editableArea.addEventListener("keydown", function (event) {
-            // Check for bold keystrokes: Ctrl + B or Command + B
-            if ((event.ctrlKey || event.metaKey) && event.key === "b") {
-                event.preventDefault(); // Prevent the default browser behavior
-                document.execCommand("bold", false, null); // Toggle bold formatting
-            }
-
-            // Check for italic keystrokes: Ctrl + I or Command + I
-            if ((event.ctrlKey || event.metaKey) && event.key === "i") {
-                event.preventDefault(); // Prevent the default browser behavior
-                document.execCommand("italic", false, null); // Toggle italic formatting
-            }
-
-            // Prevent bold formatting when pressing Enter
-            if (event.key === "Enter") {
-                event.preventDefault(); // Prevent the default browser behavior
-                insertNewLine();
-            }
-        });
-
-        // Function to insert a new line at the current cursor position
-        function insertNewLine() {
-            var selection = window.getSelection();
-            var range = selection.getRangeAt(0);
-            var br = document.createElement("br");
-            range.insertNode(br);
-            range.collapse(false);
-            selection.removeAllRanges();
-            selection.addRange(range);
-        }
-
-        function toggleDarkMode() {
             document.body.classList.toggle("dark-mode");
+
+            // Check if dark mode is enabled on the body
+            const isDarkMode = document.body.classList.contains("dark-mode");
+
+            // If dark mode is enabled on the body, set the color scheme to dark, otherwise set it to light
+            document.body.style.colorScheme = isDarkMode ? "dark" : "light";
         }
 
-                // Toggle AMOLED mode
-                function toggleAMOLEDMode() {
+        // Toggle AMOLED mode
+        function toggleAMOLEDMode() {
             document.body.classList.toggle("amoled-mode");
         }
 
         // Function to clear all the text in the editable area
-function clearText() {
-    editableArea.innerHTML = "";
-}
+        function clearText() {
+            editableArea.innerHTML = "";
+        }
 
-// Attach the clearText() function to the logo click event
-var logo = document.querySelector("h1");
-logo.addEventListener("click", clearText);
+        // Attach the clearText() function to the logo click event
+        var logo = document.querySelector("h1");
+        logo.addEventListener("click", clearText);
 
-function handleKeyDown(event) {
-    // Check if the Ctrl and Alt keys are pressed simultaneously and the C key is pressed
-    if (event.ctrlKey && event.altKey && event.key === "c") {
-        event.preventDefault(); // Prevent the default browser behavior
-        clearText(); // Call the clearText() function
-    }
-}
+        function handleKeyDown(event) {
+            // Check if the Ctrl and Alt keys are pressed simultaneously and the C key is pressed
+            if (event.ctrlKey && event.altKey && event.key === "c") {
+                event.preventDefault(); // Prevent the default browser behavior
+                clearText(); // Call the clearText() function
+            }
+        }
 
-// Attach the handleKeyDown() function to the keydown event on the document
-document.addEventListener("keydown", handleKeyDown);
+        // Attach the handleKeyDown() function to the keydown event on the document
+        document.addEventListener("keydown", handleKeyDown);
 
-// Function to toggle the spoiler text
-function toggleSpoiler() {
-    this.classList.toggle("revealed");
-}
+        // Function to toggle the spoiler text
+        function toggleSpoiler() {
+            this.classList.toggle("revealed");
+        }
 
-// Function to handle keydown event and check for the keyboard shortcut
-function handleKeyDown(event) {
-    // Check if the Ctrl, Alt, and Q keys are pressed simultaneously
-    if (event.ctrlKey && event.altKey && event.key === "q") {
-        event.preventDefault(); // Prevent the default browser behavior
-        var selection = window.getSelection();
-        var range = selection.getRangeAt(0);
-        
-        // Create a new span element with the spoiler class and replace the selected range with it
-        var spoiler = document.createElement("span");
-        spoiler.classList.add("spoiler");
-        spoiler.classList.add("revealed"); // Add the revealed class to immediately show the spoiler
-        spoiler.textContent = range.toString();
-        range.deleteContents();
-        range.insertNode(spoiler);
-        
-        // Set the selection to the newly created spoiler element
-        range.selectNodeContents(spoiler);
-        selection.removeAllRanges();
-        selection.addRange(range);
-        
-        // Attach the click event listener to the newly created spoiler element
-        spoiler.addEventListener("click", toggleSpoiler);
-    }
-}
+        // Function to handle keydown event and check for the keyboard shortcut
+        function handleKeyDown(event) {
+            // Check if the Ctrl, Alt, and Q keys are pressed simultaneously
+            if (event.ctrlKey && event.altKey && event.key === "q") {
+                event.preventDefault(); // Prevent the default browser behavior
+                var selection = window.getSelection();
+                var range = selection.getRangeAt(0);
 
-// Attach the handleKeyDown() function to the keydown event on the editable area
-editableArea.addEventListener("keydown", handleKeyDown);
+                // Create a new span element with the spoiler class and replace the selected range with it
+                var spoiler = document.createElement("span");
+                spoiler.classList.add("spoiler");
+                spoiler.classList.add("revealed"); // Add the revealed class to immediately show the spoiler
+                spoiler.textContent = range.toString();
+                range.deleteContents();
+                range.insertNode(spoiler);
 
+                // Set the selection to the newly created spoiler element
+                range.selectNodeContents(spoiler);
+                selection.removeAllRanges();
+                selection.addRange(range);
+
+                // Attach the click event listener to the newly created spoiler element
+                spoiler.addEventListener("click", toggleSpoiler);
+            }
+        }
+
+        // Attach the handleKeyDown() function to the keydown event on the editable area
+        editableArea.addEventListener("keydown", handleKeyDown);
     </script>
 </body>
 </html>

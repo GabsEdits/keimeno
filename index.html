@@ -18,7 +18,7 @@ Stable v1.0+
 <body>
     <h1 style="font-weight: bolder;">Keímeno</h1>
     <p id="desc">Just Text. Just Notes. Save.</p>
-    <p id="version">v0.2 Early Alpha</p>
+    <p id="version" onclick="toggleAMOLEDMode()">v0.3 Early Alpha</p>
 
     <div id="editableArea" contenteditable="true" placeholder="Click and type your text here"></div>
 
@@ -76,6 +76,64 @@ function insertNewLine() {
     selection.addRange(range);
 }
 
+        // Toggle AMOLED mode
+        function toggleAMOLEDMode() {
+            document.body.classList.toggle("amoled-mode");
+        }
+
+        // Function to clear all the text in the editable area
+        function clearText() {
+            editableArea.innerHTML = "";
+        }
+
+        // Attach the clearText() function to the logo click event
+        var logo = document.querySelector("h1");
+        logo.addEventListener("click", clearText);
+
+        function handleKeyDown(event) {
+            // Check if the Ctrl and Alt keys are pressed simultaneously and the C key is pressed
+            if (event.ctrlKey && event.altKey && event.key === "c") {
+                event.preventDefault(); // Prevent the default browser behavior
+                clearText(); // Call the clearText() function
+            }
+        }
+
+        // Attach the handleKeyDown() function to the keydown event on the document
+        document.addEventListener("keydown", handleKeyDown);
+
+        // Function to toggle the spoiler text
+        function toggleSpoiler() {
+            this.classList.toggle("revealed");
+        }
+
+        // Function to handle keydown event and check for the keyboard shortcut
+        function handleKeyDown(event) {
+            // Check if the Ctrl, Alt, and Q keys are pressed simultaneously
+            if (event.ctrlKey && event.altKey && event.key === "q") {
+                event.preventDefault(); // Prevent the default browser behavior
+                var selection = window.getSelection();
+                var range = selection.getRangeAt(0);
+
+                // Create a new span element with the spoiler class and replace the selected range with it
+                var spoiler = document.createElement("span");
+                spoiler.classList.add("spoiler");
+                spoiler.classList.add("revealed"); // Add the revealed class to immediately show the spoiler
+                spoiler.textContent = range.toString();
+                range.deleteContents();
+                range.insertNode(spoiler);
+
+                // Set the selection to the newly created spoiler element
+                range.selectNodeContents(spoiler);
+                selection.removeAllRanges();
+                selection.addRange(range);
+
+                // Attach the click event listener to the newly created spoiler element
+                spoiler.addEventListener("click", toggleSpoiler);
+            }
+        }
+
+        // Attach the handleKeyDown() function to the keydown event on the editable area
+        editableArea.addEventListener("keydown", handleKeyDown);
     </script>
 </body>
 </html>

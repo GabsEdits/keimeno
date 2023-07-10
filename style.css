@@ -92,3 +92,26 @@ body {
         min-height: 450px;
     }
 }
+
+body.amoled-mode {
+    background-color: #000;
+}
+
+body.amoled-mode #editableArea {
+    background-color: #000;
+}
+
+.spoiler {
+    background-color: #22222234;
+    padding: 1px;
+    border-radius: 5px;
+    color: #000;
+    cursor: pointer;
+    font-weight: inherit;
+}
+
+.spoiler.revealed {
+    background-color: #222222;
+    color: #222222;
+    font-weight: inherit;
+}
