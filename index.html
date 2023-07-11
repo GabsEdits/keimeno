@@ -11,20 +11,44 @@ Stable v1.0+
     <link rel="preconnect" href="https://rsms.me/">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" type="image/png" sizes="180x180" href="/logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Keímeno</title>
 
 </head>
 <body>
-    <h1 style="font-weight: bolder;">Keímeno</h1>
+    <h1 style="font-weight: bolder;" id="hover-element">Keímeno</h1>
     <p id="desc">Just Text. Just Notes. Save.</p>
-    <p id="version" onclick="toggleAMOLEDMode()">v0.3 Early Alpha</p>
+    <p id="version" onclick="toggleAMOLEDMode()">v0.4 Alpha</p>
 
     <div id="editableArea" contenteditable="true" placeholder="Click and type your text here"></div>
 
     <div class="under-construction"></div>
     <p id="owner">Made with ❤️ by <span>Gabs</span></p>
     <p class="github"><a href="https://github.com/GabsEdits/keimeno" aria-label="Check out the source code"><i class="fab fa-github"></i></a></p>
+    <div class="keyboard-shortcuts-toggle" onclick="toggleKeyboardShortcuts()">
+        <i class="fas fa-keyboard"></i>
+    </div>
+
+    <div class="keyboard-shortcut-modal-background" onclick="toggleKeyboardShortcuts()"></div>
+    <div class="keyboard-shortcuts-container">
+        <h2 class="keyboard-shortcuts-title">Keyboard Shortcuts</h2>
+        <div class="keyboard-shortcut">
+            <div class="keyboard-shortcut-key">Ctrl + B</div>
+            <div class="keyboard-shortcut-description">Toggle Bold</div>
+        </div>
+        <div class="keyboard-shortcut">
+            <div class="keyboard-shortcut-key">Ctrl + I</div>
+            <div class="keyboard-shortcut-description">Toggle Italic</div>
+        </div>
+        <div class="keyboard-shortcut">
+            <div class="keyboard-shortcut-key">Ctrl + Alt + Q</div>
+            <div class="keyboard-shortcut-description">Toggle Spoiler</div>
+        </div>
+        <div class="keyboard-shortcut">
+            <div class="keyboard-shortcut-key">Ctrl + Alt + C</div>
+            <div class="keyboard-shortcut-description">Clear All Text <span style="color: gray; font-size: 10px; text-align: left; font-weight: 600;">(Coming Soon)</span></div>
+        </div>
     <script>
         // JavaScript code to enable the input field to display entered text
   var editableArea = document.getElementById("editableArea");
@@ -134,6 +158,34 @@ function insertNewLine() {
 
         // Attach the handleKeyDown() function to the keydown event on the editable area
         editableArea.addEventListener("keydown", handleKeyDown);
+
+        const hoverElement = document.getElementById('hover-element');
+const originalColor = window.getComputedStyle(hoverElement).color;
+
+hoverElement.addEventListener('mouseenter', function() {
+  const randomColor = getRandomColor();
+  hoverElement.style.color = randomColor;
+});
+
+hoverElement.addEventListener('mouseleave', function() {
+  hoverElement.style.color = originalColor;
+});
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function toggleKeyboardShortcuts() {
+            const modal = document.querySelector('.keyboard-shortcuts-container');
+            const modalBackground = document.querySelector('.keyboard-shortcut-modal-background');
+            modal.classList.toggle('show');
+            modalBackground.classList.toggle('show');
+        }
     </script>
 </body>
 </html>
