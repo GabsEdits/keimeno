@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style-home.css">
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <header>
+    <h1>Keímeno</h1>
+    <p id="desc">Your Notes. Your Text. Save.</p>
+    <p id="version" onclick="toggleAMOLEDMode()">v0.0.1 Early Pre-alpha</p>
+
+    <a class="home" href="/">
+        <i class="fa-solid fa-house"></i>
+    </a>
+  </header>
+
+  <div id="noteList" class="container">
+    <h2>All Notes</h2>
+    <ul id="noteItems"></ul>
+  </div>
+
+  <div id="noteDetails" class="container">
+    <h2>Note Details</h2>
+    <div id="noteContent"></div>
+  </div>
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <div class="under-construction"></div>
+
+  <script>
+    const notes = [
+  { id: 1, title: "Note 1", content: "This is the content of Note 1" },
+  { id: 2, title: "Note 2", content: "This is the content of Note 2" },
+  { id: 3, title: "Note 3", content: "This is the content of Note 3" }
+];
+
+function showNoteList() {
+  const noteItemsContainer = document.getElementById("noteItems");
+
+  // Clear the existing note list
+  noteItemsContainer.innerHTML = "";
+
+  // Populate the note list
+  for (const note of notes) {
+    const listItem = document.createElement("li");
+    listItem.textContent = note.title;
+    listItem.addEventListener("click", function() {
+      showNoteDetails(note);
+    });
+    noteItemsContainer.appendChild(listItem);
+  }
+
+  // Show the note list and hide the note details
+  document.getElementById("noteList").style.display = "block";
+  document.getElementById("noteDetails").style.display = "none";
+}
+
+function showNoteDetails(note) {
+  const noteContentContainer = document.getElementById("noteContent");
+
+  // Populate the note details
+  noteContentContainer.textContent = note.content;
+
+  // Show the note details and hide the note list
+  document.getElementById("noteDetails").style.display = "block";
+  document.getElementById("noteList").style.display = "none";
+}
+
+// Initially, show the note list
+showNoteList();
+
+  </script>
+</body>
+</html>

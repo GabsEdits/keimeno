@@ -188,7 +188,7 @@ body.amoled-mode #editableArea {
 .keyboard-shortcuts-toggle {
     position: fixed;
     top: 10px;
-    right: 10px;
+    right: 15px;
     z-index: 2;
     background-color: #fff;
     color: #333;
@@ -200,3 +200,104 @@ body.amoled-mode #editableArea {
     align-items: center;
     cursor: pointer;
 }
+
+.settings-toggle {
+    position: fixed;
+    top: 10px;
+    right: 55px;
+    z-index: 2;
+    background-color: #fff;
+    color: #333;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.settings-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 400px;
+    max-width: 90%;
+    z-index: 2;
+    display: none;
+}
+
+.settings-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.settings-modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    display: none;
+}
+
+.setting {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.setting-label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.setting-toggle input[type="checkbox"] {
+    display: none;
+}
+
+.setting-toggle label {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.setting-toggle label:before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.setting-toggle input[type="checkbox"]:checked + label {
+    background-color: #66bb6a;
+}
+
+.setting-toggle input[type="checkbox"]:checked + label:before {
+    transform: translateX(20px);
+}
+
+.footer-copyright {
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.3rem;
+  }

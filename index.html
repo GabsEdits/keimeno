@@ -19,13 +19,15 @@ Stable v1.0+
 <body>
     <h1 style="font-weight: bolder;" id="hover-element">Keímeno</h1>
     <p id="desc">Just Text. Just Notes. Save.</p>
-    <p id="version" onclick="toggleAMOLEDMode()">v0.4 Alpha</p>
+    <p id="version" onclick="toggleAMOLEDMode()">v0.5 Alpha</p>
 
     <div id="editableArea" contenteditable="true" placeholder="Click and type your text here"></div>
 
     <div class="under-construction"></div>
     <p id="owner">Made with ❤️ by <span>Gabs</span></p>
+    <p class="footer-copyright">© 2023 Gabs/Gabriel Cozma. All rights reserved.</p>
     <p class="github"><a href="https://github.com/GabsEdits/keimeno" aria-label="Check out the source code"><i class="fab fa-github"></i></a></p>
+    
     <div class="keyboard-shortcuts-toggle" onclick="toggleKeyboardShortcuts()">
         <i class="fas fa-keyboard"></i>
     </div>
@@ -48,6 +50,25 @@ Stable v1.0+
         <div class="keyboard-shortcut">
             <div class="keyboard-shortcut-key">Ctrl + Alt + C</div>
             <div class="keyboard-shortcut-description">Clear All Text <span style="color: gray; font-size: 10px; text-align: left; font-weight: 600;">(Coming Soon)</span></div>
+        </div>
+
+        <div class="settings-modal-background" onclick="toggleSettingsContainer()"></div>
+        <div class="settings-container">
+            <h2 class="settings-title">Settings</h2>
+            <div class="setting">
+                <div class="setting-label">Dark Mode</div>
+                <div class="setting-toggle">
+                    <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                    <label for="darkModeToggle"></label>
+                </div>
+            </div>
+            <div class="setting">
+                <div class="setting-label">Notifications</div>
+                <div class="setting-toggle">
+                    <input type="checkbox" id="notificationToggle" onchange="toggleNotifications()">
+                    <label for="notificationToggle"></label>
+                </div>
+            </div>
         </div>
     <script>
         // JavaScript code to enable the input field to display entered text
@@ -186,6 +207,41 @@ function toggleKeyboardShortcuts() {
             modal.classList.toggle('show');
             modalBackground.classList.toggle('show');
         }
+
+
+        const settingsToggle = document.querySelector('.settings-toggle');
+    const keyboardToggle = document.querySelector('.keyboard-shortcuts-toggle');
+    const settingsContainer = document.querySelector('.settings-container');
+    const keyboardContainer = document.querySelector('.keyboard-shortcuts-container');
+    const settingsModalBackground = document.querySelector('.settings-modal-background');
+    const keyboardModalBackground = document.querySelector('.keyboard-shortcut-modal-background');
+
+    function toggleContainers(container) {
+        if (container === 'settings') {
+            settingsContainer.classList.toggle('show');
+            settingsModalBackground.classList.toggle('show');
+            keyboardContainer.classList.remove('show');
+            keyboardModalBackground.classList.remove('show');
+        } else if (container === 'keyboard') {
+            keyboardContainer.classList.toggle('show');
+            keyboardModalBackground.classList.toggle('show');
+            settingsContainer.classList.remove('show');
+            settingsModalBackground.classList.remove('show');
+        }
+    }
+
+    function handleOutsideClick(event) {
+        if (!settingsToggle.contains(event.target) && !settingsContainer.contains(event.target) &&
+            !keyboardToggle.contains(event.target) && !keyboardContainer.contains(event.target)) {
+            settingsContainer.classList.remove('show');
+            settingsModalBackground.classList.remove('show');
+            keyboardContainer.classList.remove('show');
+            keyboardModalBackground.classList.remove('show');
+        }
+    }
+
+</script>
+
     </script>
 </body>
 </html>

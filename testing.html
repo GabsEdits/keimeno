@@ -119,7 +119,7 @@ Stable v1.0+
 <body>
     <h1 style="font-weight: bolder;">Keímeno</h1>
     <p id="desc">Just Text. Just Notes. Save.</p>
-    <p id="version" onclick="toggleAMOLEDMode()">v0.3.5 Testing Ground</p>
+    <p id="version" onclick="toggleAMOLEDMode()">v0.7 Beta Testing Ground</p>
 
     <div id="editableArea" contenteditable="true" placeholder="Click and type your text here"></div>
 
@@ -127,9 +127,52 @@ Stable v1.0+
     <p id="owner">Made with ❤️ by <span>Gabs</span></p>
     <p class="github"><a href="https://github.com/GabsEdits/keimeno" aria-label="Check out the source code"><i class="fab fa-github"></i></a></p>
 
-    <div class="dark-mode-toggle" onclick="toggleDarkMode()">
-        <label for="darkModeCheckbox"><i class="fas fa-moon"></i></label>
+    <div class="keyboard-shortcuts-toggle" onclick="toggleKeyboardShortcuts()">
+        <i class="fas fa-keyboard"></i>
     </div>
+
+   <div class="settings-toggle" onclick="toggleSettingsContainer()">
+        <i class="fas fa-gear"></i>
+    </div>
+
+    <div class="keyboard-shortcut-modal-background" onclick="toggleKeyboardShortcuts()"></div>
+    <div class="keyboard-shortcuts-container">
+        <h2 class="keyboard-shortcuts-title">Keyboard Shortcuts</h2>
+        <div class="keyboard-shortcut">
+            <div class="keyboard-shortcut-key">Ctrl + B</div>
+            <div class="keyboard-shortcut-description">Toggle Bold</div>
+        </div>
+        <div class="keyboard-shortcut">
+            <div class="keyboard-shortcut-key">Ctrl + I</div>
+            <div class="keyboard-shortcut-description">Toggle Italic</div>
+        </div>
+        <div class="keyboard-shortcut">
+            <div class="keyboard-shortcut-key">Ctrl + Alt + Q</div>
+            <div class="keyboard-shortcut-description">Toggle Spoiler</div>
+        </div>
+        <div class="keyboard-shortcut">
+            <div class="keyboard-shortcut-key">Ctrl + Alt + C</div>
+            <div class="keyboard-shortcut-description">Clear All Text <span style="color: gray; font-size: 10px; text-align: left; font-weight: 600;">(Coming Soon)</span></div>
+        </div>
+
+        <div class="settings-modal-background" onclick="toggleSettingsContainer()"></div>
+        <div class="settings-container">
+            <h2 class="settings-title">Settings</h2>
+            <div class="setting">
+                <div class="setting-label">Dark Mode</div>
+                <div class="setting-toggle">
+                    <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                    <label for="darkModeToggle"></label>
+                </div>
+            </div>
+            <div class="setting">
+                <div class="setting-label">Notifications</div>
+                <div class="setting-toggle">
+                    <input type="checkbox" id="notificationToggle" onchange="toggleNotifications()">
+                    <label for="notificationToggle"></label>
+                </div>
+            </div>
+        </div>
 
     <script>
         // JavaScript code to enable the input field to display entered text
