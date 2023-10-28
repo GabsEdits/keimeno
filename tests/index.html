@@ -1,0 +1,265 @@
+<!-- 
+Early Alpha - v0.1 - v0.3
+Alpha - v0.4 - v0.6
+Beta - v0.7 - v0.9
+Stable v1.0+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/src/assets/css/main.css">
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" type="image/png" sizes="180x180" href="src/assets/images/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Keímeno- Testing Markdown</title>
+</head>
+<body>
+    <header>
+        <h1 id="hover-element">Keímeno</h1>
+        <button id="toggleMarkdownButton">Toggle Markdown</button>
+    </header>
+
+    <main>
+        <div id="editableArea" contenteditable="true" placeholder="Hi"></div>
+        <div id="markdownPreview" style="display: none;"></div>      
+    </main>
+
+    <section>
+        <div class="under-construction"></div>
+    </section>
+    <footer>
+        <p id="desc">Just Text. Just Notes. Save. Secure.</p>
+        <p id="version">Markdown Support</p>
+        <p id="owner">Made with ❤️ by <a href="https://gabs.eu.org">Gabs</a></p>
+        <p class="footer-copyright">© 2023 Gabs/Gabriel Cozma. All rights reserved.</p>
+        <p class="github"><a href="https://github.com/GabsEdits/keimeno" aria-label="Check out the source code"><i
+                    class="fab fa-github"></i></a></p>
+    </footer>
+
+    <aside>
+        <p id="wordCountDisplay">Words: <span class="wordCountDisplayNumber">0</span></p>
+        <div class="keyboard-shortcuts-toggle" onclick="toggleKeyboardShortcuts()">
+            <i class="fas fa-keyboard"></i>
+        </div>
+
+        <div class="focus-toggle" onclick="toggleDistractionFreeMode()">
+            <i class="fas fa-eye"></i>
+        </div>
+
+        <div class="keyboard-shortcut-modal-background" onclick="toggleKeyboardShortcuts()"></div>
+        <div class="keyboard-shortcuts-container">
+            <h2 class="keyboard-shortcuts-title">Keyboard Shortcuts</h2>
+            <div class="keyboard-shortcut">
+                <div class="keyboard-shortcut-key">Ctrl + B</div>
+                <div class="keyboard-shortcut-description">Toggle Bold</div>
+            </div>
+            <div class="keyboard-shortcut">
+                <div class="keyboard-shortcut-key">Ctrl + I</div>
+                <div class="keyboard-shortcut-description">Toggle Italic</div>
+            </div>
+            <div class="keyboard-shortcut">
+                <div class="keyboard-shortcut-key">Ctrl + Alt + Q</div>
+                <div class="keyboard-shortcut-description">Toggle Spoiler</div>
+            </div>
+            <div class="keyboard-shortcut">
+                <div class="keyboard-shortcut-key">Alt + C</div>
+                <div class="keyboard-shortcut-description">Clear All Text</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Scripts -->
+    <script>
+        var editableArea = document.getElementById("editableArea");
+        var toggleMarkdownButton = document.getElementById("toggleMarkdownButton");
+var markdownPreview = document.getElementById("markdownPreview");
+
+window.addEventListener("load", function () {
+  var savedText = localStorage.getItem("savedText");
+  if (savedText) {
+    editableArea.innerHTML = savedText;
+    updateContentWithMarkdown(savedText);
+  }
+});
+
+function updateContentWithMarkdown(text) {
+  var html = marked(text);
+  if (toggleMarkdownButton.dataset.preview === "true") {
+    markdownPreview.innerHTML = html;
+  } else {
+    editableArea.innerHTML = html;
+  }
+}
+
+editableArea.addEventListener("input", function () {
+  var text = editableArea.innerHTML;
+  localStorage.setItem("savedText", text);
+  updateContentWithMarkdown(text);
+});
+
+// Toggle between Markdown text and its preview
+toggleMarkdownButton.addEventListener("click", function () {
+  if (toggleMarkdownButton.dataset.preview === "true") {
+    toggleMarkdownButton.dataset.preview = "false";
+    toggleMarkdownButton.textContent = "Show Markdown";
+    markdownPreview.style.display = "none";
+    editableArea.style.display = "block";
+    updateContentWithMarkdown(editableArea.innerHTML);
+  } else {
+    toggleMarkdownButton.dataset.preview = "true";
+    toggleMarkdownButton.textContent = "Show Preview";
+    markdownPreview.style.display = "block";
+    editableArea.style.display = "none";
+    updateContentWithMarkdown(editableArea.innerHTML);
+  }
+});
+
+editableArea.addEventListener("keydown", function (event) {
+  if ((event.ctrlKey || event.metaKey) && event.key === "b") {
+    event.preventDefault();
+    document.execCommand("bold", false, null);
+  }
+
+  if ((event.ctrlKey || event.metaKey) && event.key === "i") {
+    event.preventDefault();
+    document.execCommand("italic", false, null);
+  }
+
+  if (event.key === "Enter") {
+    event.preventDefault();
+    insertNewLine();
+  }
+});
+
+function insertNewLine() {
+  var selection = window.getSelection();
+  var range = selection.getRangeAt(0);
+  var br = document.createElement("br");
+  range.insertNode(br);
+  range.collapse(false);
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
+
+function toggleDistractionFreeMode() {
+  document.body.classList.toggle("focus-mode");
+}
+
+function clearText() {
+  if (window.confirm("Are you sure you want to clear the text?")) {
+    editableArea.innerHTML = "";
+    localStorage.removeItem("savedText");
+  }
+}
+
+var logo = document.querySelector("h1");
+logo.addEventListener("click", clearText);
+
+document.addEventListener("keydown", handleKeyDown);
+
+function clearTextShortcut(event) {
+  if (event.altKey && event.key === "c") {
+    event.preventDefault();
+    clearText();
+  }
+}
+
+document.addEventListener("keydown", clearTextShortcut);
+
+function toggleSpoiler() {
+  this.classList.toggle("revealed");
+}
+
+function handleKeyDown(event) {
+  if (event.ctrlKey && event.altKey && event.key === "q") {
+    event.preventDefault();
+    var selection = window.getSelection();
+    var range = selection.getRangeAt(0);
+
+    var spoiler = document.createElement("span");
+    spoiler.classList.add("spoiler");
+    spoiler.classList.add("revealed");
+    spoiler.textContent = range.toString();
+    range.deleteContents();
+    range.insertNode(spoiler);
+
+    range.selectNodeContents(spoiler);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    spoiler.addEventListener("click", toggleSpoiler);
+  }
+}
+
+editableArea.addEventListener("keydown", handleKeyDown);
+
+const hoverElement = document.getElementById("hover-element");
+const originalColor = window.getComputedStyle(hoverElement).color;
+
+hoverElement.addEventListener("mouseenter", function () {
+  const randomColor = getRandomColor();
+  hoverElement.style.color = randomColor;
+});
+
+hoverElement.addEventListener("mouseleave", function () {
+  hoverElement.style.color = originalColor;
+});
+
+function getRandomColor() {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function toggleKeyboardShortcuts() {
+  const modal = document.querySelector(".keyboard-shortcuts-container");
+  const modalBackground = document.querySelector(
+    ".keyboard-shortcut-modal-background"
+  );
+  modal.classList.toggle("show");
+  modalBackground.classList.toggle("show");
+}
+
+const keyboardToggle = document.querySelector(".keyboard-shortcuts-toggle");
+const keyboardContainer = document.querySelector(
+  ".keyboard-shortcuts-container"
+);
+const keyboardModalBackground = document.querySelector(
+  ".keyboard-shortcut-modal-background"
+);
+
+function handleOutsideClick(event) {
+  if (
+    !keyboardToggle.contains(event.target) &&
+    !keyboardContainer.contains(event.target)
+  ) {
+    keyboardContainer.classList.remove("show");
+    keyboardModalBackground.classList.remove("show");
+  }
+}
+
+const wordCountDisplay = document.getElementById("wordCountDisplay");
+
+editableArea.addEventListener("input", countWords);
+
+function countWords() {
+  const text = editableArea.textContent || editableArea.innerText;
+
+  const words = text.trim().split(/\s+/);
+
+  const filteredWords = words.filter((word) => word !== "");
+
+  wordCountDisplay.textContent = `Words: ${filteredWords.length}`;
+}
+
+countWords();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@2.0.1/marked.min.js"></script>
+</body>
+</html>
