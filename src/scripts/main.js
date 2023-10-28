@@ -153,4 +153,6 @@ function countWords() {
   wordCountDisplay.textContent = `Words: ${filteredWords.length}`;
 }
 
-countWords();
+window.addEventListener("load", function () {
+  countWords();
+});
