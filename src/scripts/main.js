@@ -47,6 +47,7 @@ function clearText() {
   if (window.confirm("Are you sure you want to clear the text?")) {
     editableArea.innerHTML = "";
     localStorage.removeItem("savedText");
+    resetCounter();
   }
 }
 
@@ -151,6 +152,10 @@ function countWords() {
   const filteredWords = words.filter((word) => word !== "");
 
   wordCountDisplay.textContent = `Words: ${filteredWords.length}`;
+}
+
+function resetCounter() {
+  wordCountDisplay.textContent = 'Words: 0';
 }
 
 window.addEventListener("load", function () {
