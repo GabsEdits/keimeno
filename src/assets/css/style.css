@@ -108,6 +108,10 @@ footer .github a:hover {
   #editableArea {
     min-height: 450px;
   }
+
+  #wordCountDisplay {
+    font-size: 14px;
+  }
 }
 
 body.focus-mode {
