@@ -93,7 +93,7 @@ function handleKeyDown(event) {
 editableArea.addEventListener("keydown", handleKeyDown);
 
 const hoverElement = document.getElementById("hover-element");
-const originalColor = window.getComputedStyle(hoverElement).color;
+const originalColor = "var(--color-text)";
 
 hoverElement.addEventListener("mouseenter", function () {
   const randomColor = getRandomColor();
